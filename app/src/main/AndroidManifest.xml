@@ -12,10 +12,10 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.BioskopApp">
         <activity
-            android:name=".ConfirmationActivity"
+            android:name=".MenuActivity"
             android:exported="false" />
         <activity
-            android:name=".PaymentActivity"
+            android:name=".DetailActivity"
             android:exported="false" />
         <activity
             android:name=".ChooseSeatActivity"

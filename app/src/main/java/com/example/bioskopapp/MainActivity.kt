@@ -1,27 +1,60 @@
 package com.example.bioskopapp
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import com.example.bioskopapp.databinding.ActivityMainBinding
+import android.widget.*
+import androidx.appcompat.app.AppCompatActivity
+import com.example.bioskopapp.MenuActivity
 
 class MainActivity : AppCompatActivity() {
 
-    private lateinit var binding: ActivityMainBinding
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityMainBinding.inflate(layoutInflater)
-        setContentView(binding.root)
+        setContentView(R.layout.activity_main)
 
-        binding.btnFilm1.setOnClickListener { pilihFilm("Avengers: Endgame") }
-        binding.btnFilm2.setOnClickListener { pilihFilm("Spider-Man: No Way Home") }
-        binding.btnFilm3.setOnClickListener { pilihFilm("The Batman") }
+        val etNama = findViewById<EditText>(R.id.etNama)
+        val etNim = findViewById<EditText>(R.id.etNim)
+        val spKelas = findViewById<Spinner>(R.id.spKelas)
+        val btnMasuk = findViewById<Button>(R.id.btnMasuk)
+
+        val kelasList = arrayOf("2AEC1","2AEC2","2AEC3","2AEC4")
+
+        val adapter = ArrayAdapter(
+            this,
+            android.R.layout.simple_spinner_dropdown_item,
+            kelasList
+        )
+
+        spKelas.adapter = adapter
+
+        btnMasuk.setOnClickListener {
+
+            val nama = etNama.text.toString()
+            val nim = etNim.text.toString()
+            val kelas = spKelas.selectedItem.toString()
+
+            if(nama.isEmpty() || nim.isEmpty()){
+
+                Toast.makeText(
+                    this,
+                    "Nama dan NIM tidak boleh kosong",
+                    Toast.LENGTH_SHORT
+                ).show()
+
+            }else{
+
+                val intent = Intent(this, MenuActivity::class.java)
+
+                intent.putExtra("nama",nama)
+                intent.putExtra("nim",nim)
+                intent.putExtra("kelas",kelas)
+
+                startActivity(intent)
+
+            }
+
+        }
+
     }
 
-    private fun pilihFilm(namaFilm: String) {
-        val intent = Intent(this, ChooseSeatActivity::class.java)
-        intent.putExtra("FILM", namaFilm)
-        startActivity(intent)
-    }
 }
